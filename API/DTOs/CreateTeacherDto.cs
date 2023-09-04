@@ -2,7 +2,7 @@
 
 namespace API.DTOs
 {
-    public class RegisterDto
+    public class CreateTeacherDto
     {
         [Required(ErrorMessage = "Please enter an email address")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
@@ -20,8 +20,11 @@ namespace API.DTOs
         [Required(ErrorMessage = "Please enter a phone number")]
         [Phone(ErrorMessage = "Invalid phone number")]
         public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Please enter Main Subject")]
+        public string MainSubject { get; set; }
+        public string Concurrent { get; set; }
         public string Address { get; set; }
-        public string ParentName { get; set; }
+        public string TaxCode { get; set; }
         public IFormFile File { get; set; }
     }
 }

@@ -13,6 +13,10 @@ namespace API.Extensions
             services.AddCors();
             services.AddHttpClient();
             services.AddScoped<ITokenService, TokenService>();
+            services.Configure<OutlookMailSettings>(config.GetSection("OutlookMailSettings"));
+            services.AddScoped<IMailService, MailService>();
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.AddScoped<IPhotoService, PhotoService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

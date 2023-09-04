@@ -10,6 +10,9 @@ namespace API.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<Gender> Genders { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

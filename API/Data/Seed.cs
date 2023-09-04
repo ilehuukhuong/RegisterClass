@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using API.Entities;
+using System.Text.Json;
 
 namespace API.Data
 {
@@ -13,7 +14,8 @@ namespace API.Data
 
             var roles = new List<AppRole>
             {
-                new AppRole{Name = "Member"},
+                new AppRole{Name = "Student"},
+                new AppRole{Name = "Teacher"},
                 new AppRole{Name = "Admin"}
             };
 
@@ -25,10 +27,45 @@ namespace API.Data
             var admin = new AppUser
             {
                 UserName = "admin",
+                GenderId = 1
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] { "Admin" });
+
+            var teacher = new AppUser
+            {
+                UserName = "LongNG",
+                GenderId = 1
+            };
+
+            await userManager.CreateAsync(teacher, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(teacher, new[] { "Teacher" });
+
+            var student = new AppUser
+            {
+                UserName = "202008-00002",
+                GenderId = 1
+            };
+
+            await userManager.CreateAsync(student, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(student, new[] { "Student" });
+        }
+
+        public static async Task SeedGender(DataContext context)
+        {
+            if (await context.Genders.AnyAsync()) return;
+
+            var genderData = await File.ReadAllTextAsync("Data/DatabaseDataSeed/GenderSeedData.json");
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var genders = JsonSerializer.Deserialize<List<Gender>>(genderData);
+
+            foreach (var gender in genders)
+            {
+                context.Genders.Add(gender);
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

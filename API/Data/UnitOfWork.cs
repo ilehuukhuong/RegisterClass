@@ -14,6 +14,7 @@ namespace API.Data
             _context = context;
         }
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+        public IGenderRepository GenderRepository => new GenderRepository(_context);
 
         public async Task<bool> Complete()
         {
