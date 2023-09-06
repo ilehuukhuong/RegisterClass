@@ -5,6 +5,7 @@
         IUserRepository UserRepository { get; }
         IGenderRepository GenderRepository { get; }
         ISemesterRepository SemesterRepository { get; }
+        IDepartmentFacultyRepository DepartmentFacultyRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }
