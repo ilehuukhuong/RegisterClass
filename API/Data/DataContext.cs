@@ -12,6 +12,7 @@ namespace API.Data
         }
 
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<Semester> Semesters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

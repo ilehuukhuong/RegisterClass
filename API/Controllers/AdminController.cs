@@ -125,11 +125,6 @@ namespace API.Controllers
             return Ok(_mapper.Map<TeacherDto>(user));
         }
 
-        private async Task<bool> UserExists(string username)
-        {
-            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
-        }
-
         [Authorize(Policy = "RequireTeacherRole")]
         [HttpGet("get-students")]
         public async Task<ActionResult<PagedList<StudentDto>>> GetStudents([FromQuery] UserParams userParams)
@@ -204,6 +199,11 @@ namespace API.Controllers
         private async Task<bool> EmailExists(string email)
         {
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
+        }
+
+        private async Task<bool> UserExists(string username)
+        {
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
     }
 }

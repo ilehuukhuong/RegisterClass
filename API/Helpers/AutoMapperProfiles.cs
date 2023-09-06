@@ -8,6 +8,8 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<Semester, SemesterDto>();
+            CreateMap<SemesterDto, Semester>();
             CreateMap<AppUser, MemberDto>();
             CreateMap<AppUser, StudentDto>();
             CreateMap<AppUser, TeacherDto>()

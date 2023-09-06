@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class GenderController : BaseApiController
+    public class GendersController : BaseApiController
     {
         private readonly IUnitOfWork _uow;
-        public GenderController(IUnitOfWork uow)
+        public GendersController(IUnitOfWork uow)
         {
             _uow = uow;
         }
@@ -20,10 +20,8 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult<Gender>> CreateGender(Gender gender)
+        public async Task<ActionResult> CreateGender(Gender gender)
         {
-            if (gender.Name == null) return BadRequest("Name is required");
-
             if (await _uow.GenderRepository.GetGenderByName(gender.Name) != null) return BadRequest("This name has taken");
 
             _uow.GenderRepository.AddGender(gender);
@@ -35,9 +33,8 @@ namespace API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult<Gender>> UpdateGender(Gender gender, int id)
+        public async Task<ActionResult> UpdateGender(Gender gender, int id)
         {
-            if (gender.Name == null) return BadRequest("Name is required");
 
             if (await _uow.GenderRepository.GetGenderByName(gender.Name) != null) return BadRequest("This name has taken");
 
@@ -52,7 +49,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult<Gender>> DeleteGender(int id)
+        public async Task<ActionResult> DeleteGender(int id)
         {
             if (_uow.GenderRepository.DeleteGender(id) == false) return BadRequest("This gender is being used by some users");
 
