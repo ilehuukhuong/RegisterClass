@@ -19,18 +19,19 @@ namespace API.Data.Repository
         }
         public void AddSemester(SemesterDto semester)
         {
-            semester.Id = -1;
+            semester.Id = 0;
             _context.Semesters.Add(_mapper.Map<Semester>(semester));
         }
 
         public void UpdateSemester(SemesterDto semesterDto)
         {
-            _mapper.Map<Semester>(semesterDto);
+            _mapper.Map(semesterDto, _context.Semesters.FirstOrDefault(x => x.Id == semesterDto.Id));
         }
 
         public bool DeleteSemester(Semester semester)
         {
-            //if (_context.Users.FirstOrDefault(x => x.SemesterId == id) != null) return false;
+            if (_context.Courses.FirstOrDefault(x => x.SemesterId == semester.Id) != null) return false;
+
             _context.Semesters.Remove(semester);
 
             return true;
@@ -43,10 +44,12 @@ namespace API.Data.Repository
 
         public SemesterDto CopySemester (Semester semester)
         {
-            semester.Id = -1;
-            semester.Code = semester.Code + "Copy";
-            semester.Name = semester.Name + " Copy";
-            return _mapper.Map<SemesterDto>(semester);
+            var copy = new SemesterDto();
+            copy.Code = semester.Code + "Copy";
+            copy.Name = semester.Name + " Copy";
+            copy.StartDay = semester.StartDay;
+            copy.EndDay = semester.EndDay;
+            return copy;
         }
 
         public async Task<Semester> GetSemesterByName(string name)

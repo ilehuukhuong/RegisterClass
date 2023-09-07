@@ -59,8 +59,8 @@ namespace API.Controllers
             semesterDto.Id = id;
 
             var checkSemester = await _uow.SemesterRepository.GetSemesterByCode(semesterDto.Code);
-
-            if (checkSemester.Id != semesterDto.Id && checkSemester.Code == semesterDto.Code) return BadRequest("This code has taken");
+            if (checkSemester != null)
+                if (checkSemester.Id != semesterDto.Id && checkSemester.Code == semesterDto.Code) return BadRequest("This code has taken");
 
             _uow.SemesterRepository.UpdateSemester(semesterDto);
 

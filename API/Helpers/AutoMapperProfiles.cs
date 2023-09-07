@@ -9,6 +9,9 @@ namespace API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<DepartmentFaculty, DepartmentFacultyDto>();
+            CreateMap<Course, CourseDto>()
+                .ForMember(dest => dest.DepartmentFaculty, opt => opt.MapFrom(src => src.DepartmentFaculty.Name))
+                .ForMember(dest => dest.Semester, opt => opt.MapFrom(src => src.Semester.Name));
             CreateMap<Semester, SemesterDto>();
             CreateMap<SemesterDto, Semester>();
             CreateMap<AppUser, MemberDto>();

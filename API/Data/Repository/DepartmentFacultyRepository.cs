@@ -24,7 +24,7 @@ namespace API.Data.Repository
 
         public bool DeleteDepartmentFaculty(int id)
         {
-            //if (_context.Users.FirstOrDefault(x => x.GenderId == id) != null) return false;
+            if (_context.Courses.FirstOrDefault(x => x.DepartmentFacultyId == id) != null) return false;
 
             _context.DepartmentFaculties.Remove(_context.DepartmentFaculties.FirstOrDefault(x => x.Id == id));
 

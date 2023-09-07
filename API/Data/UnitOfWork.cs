@@ -15,6 +15,7 @@ namespace API.Data
         }
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public IGenderRepository GenderRepository => new GenderRepository(_context);
+        public ICourseRepository CourseRepository => new CourseRepository(_context, _mapper);
         public IDepartmentFacultyRepository DepartmentFacultyRepository => new DepartmentFacultyRepository(_context, _mapper);
         public ISemesterRepository SemesterRepository => new SemesterRepository(_context, _mapper);
 
