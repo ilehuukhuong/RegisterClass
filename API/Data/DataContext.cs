@@ -15,6 +15,7 @@ namespace API.Data
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<DepartmentFaculty> DepartmentFaculties { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Class> Classes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -8,6 +8,11 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<CreateClassDto, Class>();
+            CreateMap<UpdateClassDto, Class>();
+            CreateMap<Class, ClassDto>()
+                .ForMember(dest => dest.DepartmentFaculty, opt => opt.MapFrom(src => src.DepartmentFaculty.Name))
+                .ForMember(dest => dest.Semester, opt => opt.MapFrom(src => src.Semester.Name));
             CreateMap<DepartmentFaculty, DepartmentFacultyDto>();
             CreateMap<Course, CourseDto>()
                 .ForMember(dest => dest.DepartmentFaculty, opt => opt.MapFrom(src => src.DepartmentFaculty.Name))
