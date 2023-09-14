@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Data.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,20 @@ namespace API.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Genders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GradeCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Coefficient = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GradeCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,6 +159,7 @@ namespace API.Data.Migrations
                     PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     DepartmentFacultyId = table.Column<int>(type: "int", nullable: false),
                     SemesterId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -278,6 +293,56 @@ namespace API.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StudentClasses",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentClasses", x => new { x.UserId, x.ClassId });
+                    table.ForeignKey(
+                        name: "FK_StudentClasses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentClasses_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseGradeCategories",
+                columns: table => new
+                {
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    GradeCategoryId = table.Column<int>(type: "int", nullable: false),
+                    GradeItem = table.Column<int>(type: "int", nullable: false),
+                    GradeItemCompulsory = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseGradeCategories", x => new { x.GradeCategoryId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_CourseGradeCategories_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseGradeCategories_GradeCategories_GradeCategoryId",
+                        column: x => x.GradeCategoryId,
+                        principalTable: "GradeCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -333,6 +398,11 @@ namespace API.Data.Migrations
                 column: "SemesterId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CourseGradeCategories_CourseId",
+                table: "CourseGradeCategories",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Courses_DepartmentFacultyId",
                 table: "Courses",
                 column: "DepartmentFacultyId");
@@ -341,6 +411,11 @@ namespace API.Data.Migrations
                 name: "IX_Courses_SemesterId",
                 table: "Courses",
                 column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentClasses_ClassId",
+                table: "StudentClasses",
+                column: "ClassId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -361,25 +436,34 @@ namespace API.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Classes");
+                name: "CourseGradeCategories");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "StudentClasses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "GradeCategories");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Classes");
+
+            migrationBuilder.DropTable(
+                name: "Genders");
 
             migrationBuilder.DropTable(
                 name: "DepartmentFaculties");
 
             migrationBuilder.DropTable(
                 name: "Semesters");
-
-            migrationBuilder.DropTable(
-                name: "Genders");
         }
     }
 }

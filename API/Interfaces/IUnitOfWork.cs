@@ -8,6 +8,7 @@
         IDepartmentFacultyRepository DepartmentFacultyRepository { get; }
         ICourseRepository CourseRepository { get; }
         IClassRepository ClassRepository { get; }
+        IGradeCategoryRepository GradeCategoryRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

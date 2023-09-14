@@ -25,6 +25,55 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpDelete("delete-class")]
+        public async Task<ActionResult> DeleteClass(int classId, string username)
+        {
+            var user = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            if (user == null) return NotFound();
+
+            var Class = await _uow.ClassRepository.GetClassById(classId);
+            if (Class == null) return NotFound();
+
+            var studentClass = await _uow.UserRepository.GetStudentClassForEntityAsync(user, Class);
+
+            if (studentClass == null) return NotFound();
+
+            _uow.UserRepository.RemoveStudentClass(studentClass);
+
+            if (await _uow.Complete()) return Ok("Delete successfully");
+
+            return BadRequest("Failed to delete");
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPost("add-class")]
+        public async Task<ActionResult> AddClass(int classId, string username)
+        {
+            var user = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            if (user == null) return NotFound();
+
+            var Class = await _uow.ClassRepository.GetClassById(classId);
+            if (Class == null) return NotFound();
+
+            if (await _uow.UserRepository.GetStudentClassForEntityAsync(user, Class) != null) return BadRequest("You already in this class");
+
+            var studentClass = new StudentClass
+            {
+                User = user,
+                UserId = user.Id,
+                Class = Class,
+                ClassId = Class.Id
+            };
+
+            _uow.UserRepository.AddStudentClass(studentClass);
+
+            if (await _uow.Complete()) return Ok("Add to class succesfully.");
+
+            return BadRequest("Failed to add to class");
+        }
+
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("update-student/{studentId}")]
         public async Task<ActionResult<StudentDto>> UpdateStudent(int studentId, [FromForm]RegisterDto registerDto)

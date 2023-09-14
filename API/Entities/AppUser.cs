@@ -21,5 +21,6 @@ namespace API.Entities
         public int GenderId { get; set; }
         public Gender Gender { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
+        public List<StudentClass> StudentClasses { get; set; }
     }
 }

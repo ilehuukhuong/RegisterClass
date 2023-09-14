@@ -2,11 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using API.Entities;
 using API.Interfaces;
-using System;
 using API.DTOs;
 using AutoMapper.QueryableExtensions;
 using API.Helpers;
-using Microsoft.AspNetCore.Identity;
 
 namespace API.Data.Repository
 {
@@ -18,6 +16,20 @@ namespace API.Data.Repository
         {
             _mapper = mapper;
             _context = context;
+        }
+        public void AddStudentClass(StudentClass studentClass)
+        {
+            _context.StudentClasses.Add(studentClass);
+        }
+
+        public void RemoveStudentClass(StudentClass studentClass)
+        {
+            _context.StudentClasses.Remove(studentClass);
+        }
+
+        public Task<StudentClass> GetStudentClassForEntityAsync(AppUser user, Class Class)
+        {
+            return _context.StudentClasses.FirstOrDefaultAsync(x => x.User == user && x.Class == Class);
         }
 
         public async Task<PagedList<StudentDto>> GetStudents(UserParams userParams)

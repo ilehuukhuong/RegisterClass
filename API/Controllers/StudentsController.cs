@@ -9,16 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Authorize]
-    public class UsersController : BaseApiController
+    public class StudentsController : BaseApiController
     {
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
         private readonly IUnitOfWork _uow;
-        public UsersController(IUnitOfWork uow, IMapper mapper, IPhotoService photoService)
+        public StudentsController(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
-            _photoService = photoService;
             _mapper = mapper;
         }
+
     }
 }

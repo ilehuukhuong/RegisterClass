@@ -19,6 +19,7 @@ namespace API.Data
         public IClassRepository ClassRepository => new ClassRepository(_context, _mapper);
         public IDepartmentFacultyRepository DepartmentFacultyRepository => new DepartmentFacultyRepository(_context, _mapper);
         public ISemesterRepository SemesterRepository => new SemesterRepository(_context, _mapper);
+        public IGradeCategoryRepository GradeCategoryRepository => new GradeCategoryRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

@@ -13,5 +13,7 @@ namespace API.Entities
         public int SemesterId { get; set; }
         [JsonIgnore]
         public Semester Semester { get; set; }
+        [JsonIgnore]
+        public List<CourseGradeCategory> CourseGradeCategories { get; set; }
     }
 }

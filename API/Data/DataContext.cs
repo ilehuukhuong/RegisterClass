@@ -16,10 +16,43 @@ namespace API.Data
         public DbSet<DepartmentFaculty> DepartmentFaculties { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Class> Classes { get; set; }
+        public DbSet<StudentClass> StudentClasses { get; set; }
+        public DbSet<GradeCategory> GradeCategories { get; set; }
+        public DbSet<CourseGradeCategory> CourseGradeCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<StudentClass>()
+                .HasKey(k => new { k.UserId, k.ClassId });
+
+            builder.Entity<StudentClass>()
+                .HasOne(u => u.User)
+                .WithMany(u => u.StudentClasses)
+                .HasForeignKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<StudentClass>()
+                .HasOne(l => l.Class)
+                .WithMany(u => u.StudentClasses)
+                .HasForeignKey(l => l.ClassId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CourseGradeCategory>()
+                .HasKey(k => new { k.GradeCategoryId, k.CourseId });
+
+            builder.Entity<CourseGradeCategory>()
+                .HasOne(u => u.Course)
+                .WithMany(u => u.CourseGradeCategories)
+                .HasForeignKey(u => u.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CourseGradeCategory>()
+                .HasOne(l => l.GradeCategory)
+                .WithMany(u => u.CourseGradeCategories)
+                .HasForeignKey(l => l.GradeCategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230911034401_UpdateClass")]
-    partial class UpdateClass
+    [Migration("20230914061420_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,6 +254,27 @@ namespace API.Data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("API.Entities.CourseGradeCategory", b =>
+                {
+                    b.Property<int>("GradeCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GradeItem")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GradeItemCompulsory")
+                        .HasColumnType("int");
+
+                    b.HasKey("GradeCategoryId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseGradeCategories");
+                });
+
             modelBuilder.Entity("API.Entities.DepartmentFaculty", b =>
                 {
                     b.Property<int>("Id")
@@ -288,6 +309,25 @@ namespace API.Data.Migrations
                     b.ToTable("Genders");
                 });
 
+            modelBuilder.Entity("API.Entities.GradeCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Coefficient")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GradeCategories");
+                });
+
             modelBuilder.Entity("API.Entities.Semester", b =>
                 {
                     b.Property<int>("Id")
@@ -311,6 +351,21 @@ namespace API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Semesters");
+                });
+
+            modelBuilder.Entity("API.Entities.StudentClass", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ClassId");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("StudentClasses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -469,6 +524,44 @@ namespace API.Data.Migrations
                     b.Navigation("Semester");
                 });
 
+            modelBuilder.Entity("API.Entities.CourseGradeCategory", b =>
+                {
+                    b.HasOne("API.Entities.Course", "Course")
+                        .WithMany("CourseGradeCategories")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.GradeCategory", "GradeCategory")
+                        .WithMany("CourseGradeCategories")
+                        .HasForeignKey("GradeCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("GradeCategory");
+                });
+
+            modelBuilder.Entity("API.Entities.StudentClass", b =>
+                {
+                    b.HasOne("API.Entities.Class", "Class")
+                        .WithMany("StudentClasses")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.AppUser", "User")
+                        .WithMany("StudentClasses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("API.Entities.AppRole", null)
@@ -512,7 +605,24 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
+                    b.Navigation("StudentClasses");
+
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("API.Entities.Class", b =>
+                {
+                    b.Navigation("StudentClasses");
+                });
+
+            modelBuilder.Entity("API.Entities.Course", b =>
+                {
+                    b.Navigation("CourseGradeCategories");
+                });
+
+            modelBuilder.Entity("API.Entities.GradeCategory", b =>
+                {
+                    b.Navigation("CourseGradeCategories");
                 });
 #pragma warning restore 612, 618
         }

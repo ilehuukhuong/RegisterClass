@@ -8,6 +8,11 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<CreateCourseGradeCategory, CourseGradeCategory>();
+            CreateMap<CourseGradeCategory,CourseGradeCategoryDto>()
+                .ForMember(dest => dest.Semester, opt => opt.MapFrom(src => src.Course.Semester.Name))
+                .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
+                .ForMember(dest => dest.GradeCategory, opt => opt.MapFrom(src => src.GradeCategory.Name));
             CreateMap<CreateClassDto, Class>();
             CreateMap<UpdateClassDto, Class>();
             CreateMap<Class, ClassDto>()
