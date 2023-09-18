@@ -34,6 +34,15 @@ namespace API.Controllers
             return Ok(await _uow.TimetableRepository.GetStudentTimetable(checkStudent.Id));
         }
 
+        [HttpGet("teacher/{username}")]
+        public async Task<ActionResult<IEnumerable<TeacherTimetableDto>>> GetTeacherTimetable(string username)
+        {
+            var checkTeacher = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            if (checkTeacher == null) return NotFound();
+
+            return Ok(await _uow.TimetableRepository.GetTeacherTimetable(checkTeacher.Id));
+        }
+
         [HttpPost]
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<ActionResult> CreateTimetable(Timetable timetable)

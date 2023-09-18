@@ -41,6 +41,14 @@ namespace API.Data.Repository
             return await query.ProjectTo<StudentTimetableDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
+        public async Task<IEnumerable<TeacherTimetableDto>> GetTeacherTimetable(int userId)
+        {
+            var query = _context.Timetables.AsQueryable();
+            query = query.Where(u => u.AppUserId == userId);
+
+            return await query.ProjectTo<TeacherTimetableDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
         public async Task<Timetable> GetTimetableById(int id)
         {
             return await _context.Timetables.FirstOrDefaultAsync(x => x.Id == id);

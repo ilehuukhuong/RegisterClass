@@ -8,6 +8,9 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<Timetable, TeacherTimetableDto>()
+                .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
+                .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class.Name));
             CreateMap<Timetable, StudentTimetableDto>()
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
                 .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.AppUser.FullName))
