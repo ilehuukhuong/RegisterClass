@@ -11,5 +11,6 @@ namespace API.Interfaces
         void UpdateTimetable(Timetable timetable);
         Task<Timetable> GetTimetableById(int id);
         Task<PagedList<TimetableDto>> GetTimetables(SearchParams searchParams);
+        Task<IEnumerable<StudentTimetableDto>> GetStudentTimetable(int userId);
     }
 }

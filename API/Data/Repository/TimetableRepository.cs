@@ -31,6 +31,16 @@ namespace API.Data.Repository
             return true;
         }
 
+        public async Task<IEnumerable<StudentTimetableDto>> GetStudentTimetable(int userId)
+        {
+            var studentClasses = await _context.StudentClasses.Where(sc => sc.UserId == userId).ToListAsync();
+            var classIds = studentClasses.Select(sc => sc.ClassId).ToList();
+            var query = _context.Timetables.AsQueryable();
+            query = query.Where(t => classIds.Contains(t.ClassId));
+
+            return await query.ProjectTo<StudentTimetableDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
         public async Task<Timetable> GetTimetableById(int id)
         {
             return await _context.Timetables.FirstOrDefaultAsync(x => x.Id == id);
@@ -49,9 +59,9 @@ namespace API.Data.Repository
             return await PagedList<TimetableDto>.CreateAsync(query.AsNoTracking().ProjectTo<TimetableDto>(_mapper.ConfigurationProvider), searchParams.PageNumber, searchParams.PageSize);
         }
 
-        public void UpdateTimetable(Timetable Timetable)
+        public void UpdateTimetable(Timetable timetable)
         {
-            _context.Timetables.Update(Timetable);
+            _mapper.Map(timetable, _context.Timetables.FirstOrDefault(x => x.Id == timetable.Id));
         }
     }
 }

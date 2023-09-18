@@ -66,6 +66,24 @@ namespace API.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<Timetable>()
+                .HasOne(l => l.Class)
+                .WithMany(u => u.TimetableClasses)
+                .HasForeignKey(l => l.ClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Timetable>()
+                .HasOne(l => l.AppUser)
+                .WithMany(u => u.TimetableClasses)
+                .HasForeignKey(l => l.AppUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Timetable>()
+                .HasOne(l => l.Course)
+                .WithMany(u => u.TimetableClasses)
+                .HasForeignKey(l => l.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿namespace API.DTOs
 {
-    public class TimetableDto
+    public class StudentTimetableDto
     {
         public int Id { get; set; }
-        public string TeacherCode { get; set; }
         public string TeacherName { get; set; }
+        public string Room { get; set; }
+        public string Dayinweek { get; set; }
         public string Class { get; set; }
         public string Course { get; set; }
         public DateTime Start { get; set; }
