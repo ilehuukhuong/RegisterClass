@@ -19,6 +19,7 @@ namespace API.Data
         public DbSet<StudentClass> StudentClasses { get; set; }
         public DbSet<GradeCategory> GradeCategories { get; set; }
         public DbSet<CourseGradeCategory> CourseGradeCategories { get; set; }
+        public DbSet<Timetable> Timetables { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

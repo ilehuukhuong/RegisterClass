@@ -8,6 +8,8 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<UpdateTeacherDto, AppUser>();
+            CreateMap<CreateTeacherDto, AppUser>();
             CreateMap<CreateCourseGradeCategory, CourseGradeCategory>();
             CreateMap<CourseGradeCategory,CourseGradeCategoryDto>()
                 .ForMember(dest => dest.Semester, opt => opt.MapFrom(src => src.Course.Semester.Name))
@@ -27,7 +29,8 @@ namespace API.Helpers
             CreateMap<AppUser, MemberDto>();
             CreateMap<AppUser, StudentDto>();
             CreateMap<AppUser, TeacherDto>()
-                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.Name));
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.Name))
+                .ForMember(dest => dest.MainSubject, opt => opt.MapFrom(src => src.Course.Name));
             CreateMap<RegisterDto, AppUser>();
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
             CreateMap<DateTime?, DateTime?>().ConvertUsing(d => d.HasValue ?

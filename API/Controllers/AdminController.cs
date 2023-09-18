@@ -141,17 +141,49 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut("update-teacher/{username}")]
+        public async Task<ActionResult<TeacherDto>> UpdateTeacher(string username, [FromForm] CreateTeacherDto createTeacherDto)
+        {
+            var user = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            if (user == null) return NotFound();
+
+            createTeacherDto.Email = createTeacherDto.Email.ToLower();
+
+            _mapper.Map(createTeacherDto, user);
+            user.NormalizedEmail = createTeacherDto.Email.ToUpper();
+
+            if (createTeacherDto.File != null)
+            {
+                var resultPhoto = await _photoService.AddPhotoAsync(createTeacherDto.File);
+
+                if (resultPhoto.Error != null) return BadRequest(resultPhoto.Error.Message);
+                if (user.PhotoId != null)
+                {
+                    var resultDeletePhoto = await _photoService.DeletePhotoAsync(user.PhotoId);
+                    if (resultDeletePhoto.Error != null) return BadRequest(resultDeletePhoto.Error.Message);
+                }
+
+                user.PhotoUrl = resultPhoto.SecureUrl.AbsoluteUri;
+                user.PhotoId = resultPhoto.PublicId;
+
+                await _userManager.UpdateAsync(user);
+            }
+
+            return Ok(_mapper.Map<TeacherDto>(user));
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("create-teacher/{username}")]
-        public async Task<ActionResult<TeacherDto>> CreateTeacher(string username,[FromForm]CreateTeacherDto createTeacherDto)
+        public async Task<ActionResult<TeacherDto>> CreateTeacher(string username,[FromForm]UpdateTeacherDto updateTeacherDto)
         {
             if (await UserExists(username)) return BadRequest("Username already in use");
 
-            var user = _mapper.Map<AppUser>(createTeacherDto);
+            var user = _mapper.Map<AppUser>(updateTeacherDto);
 
             user.UserName = username.ToLower();
-            user.Email = createTeacherDto.Email.ToLower();
+            user.Email = updateTeacherDto.Email.ToLower();
 
-            var result = await _userManager.CreateAsync(user, createTeacherDto.Password);
+            var result = await _userManager.CreateAsync(user, updateTeacherDto.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
@@ -159,9 +191,9 @@ namespace API.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            if (createTeacherDto.File != null)
+            if (updateTeacherDto.File != null)
             {
-                var resultPhoto = await _photoService.AddPhotoAsync(createTeacherDto.File);
+                var resultPhoto = await _photoService.AddPhotoAsync(updateTeacherDto.File);
 
                 if (resultPhoto.Error != null) return BadRequest(resultPhoto.Error.Message);
 

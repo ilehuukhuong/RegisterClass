@@ -6,6 +6,7 @@ namespace API.Helpers
     {
         public string Search { get; set; }
         public string Code { get; set; }
+        public string CourseName { get; set; }
         public int? DepartmentFacultyId { get; set; }
         public int? SemesterId { get; set; }
     }
