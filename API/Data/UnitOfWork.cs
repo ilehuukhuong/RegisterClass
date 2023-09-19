@@ -21,6 +21,7 @@ namespace API.Data
         public ISemesterRepository SemesterRepository => new SemesterRepository(_context, _mapper);
         public IGradeCategoryRepository GradeCategoryRepository => new GradeCategoryRepository(_context, _mapper);
         public ITimetableRepository TimetableRepository => new TimetableRepository(_context, _mapper);
+        public IHolidayScheduleRepository HolidayScheduleRepository => new HolidayScheduleRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

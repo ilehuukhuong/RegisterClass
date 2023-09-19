@@ -8,6 +8,7 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<HolidaySchedule,HolidaySchedule>();
             CreateMap<Timetable, TeacherTimetableDto>()
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
                 .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class.Name));

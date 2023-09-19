@@ -10,6 +10,7 @@
         IClassRepository ClassRepository { get; }
         IGradeCategoryRepository GradeCategoryRepository { get; }
         ITimetableRepository TimetableRepository { get; }
+        IHolidayScheduleRepository HolidayScheduleRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }
