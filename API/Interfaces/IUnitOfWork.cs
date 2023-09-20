@@ -11,6 +11,7 @@
         IGradeCategoryRepository GradeCategoryRepository { get; }
         ITimetableRepository TimetableRepository { get; }
         IHolidayScheduleRepository HolidayScheduleRepository { get; }
+        IGradeRepository GradeRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

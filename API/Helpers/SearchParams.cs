@@ -9,5 +9,7 @@ namespace API.Helpers
         public string CourseName { get; set; }
         public int? DepartmentFacultyId { get; set; }
         public int? SemesterId { get; set; }
+        public int? CourseId { get; set; }
+        public int? ClassId { get; set; }
     }
 }

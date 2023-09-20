@@ -9,5 +9,7 @@ namespace API.Entities
         public int Coefficient { get; set; }
         [JsonIgnore]
         public List<CourseGradeCategory> CourseGradeCategories { get; set; }
+        [JsonIgnore]
+        public List<Grade> Grades { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace API.Entities
         public Semester Semester { get; set; }
         public List<StudentClass> StudentClasses { get; set; }
         public List<Timetable> TimetableClasses { get; set; }
+        public List<Grade> Grades { get; set; }
     }
 }

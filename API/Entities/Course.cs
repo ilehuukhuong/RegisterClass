@@ -15,6 +15,9 @@ namespace API.Entities
         public Semester Semester { get; set; }
         [JsonIgnore]
         public List<CourseGradeCategory> CourseGradeCategories { get; set; }
+        [JsonIgnore]
         public List<Timetable> TimetableClasses { get; set; }
+        [JsonIgnore]
+        public List<Grade> Grades { get; set; }
     }
 }

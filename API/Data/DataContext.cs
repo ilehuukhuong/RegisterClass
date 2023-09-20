@@ -21,6 +21,7 @@ namespace API.Data
         public DbSet<CourseGradeCategory> CourseGradeCategories { get; set; }
         public DbSet<Timetable> Timetables { get; set; }
         public DbSet<HolidaySchedule> HolidaySchedules { get; set; }
+        public DbSet<Grade> Grades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -84,6 +85,30 @@ namespace API.Data
                 .HasOne(l => l.Course)
                 .WithMany(u => u.TimetableClasses)
                 .HasForeignKey(l => l.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Grade>()
+                .HasOne(l => l.Class)
+                .WithMany(u => u.Grades)
+                .HasForeignKey(l => l.ClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Grade>()
+                .HasOne(l => l.AppUser)
+                .WithMany(u => u.Grades)
+                .HasForeignKey(l => l.AppUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Grade>()
+                .HasOne(l => l.Course)
+                .WithMany(u => u.Grades)
+                .HasForeignKey(l => l.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Grade>()
+                .HasOne(l => l.GradeCategory)
+                .WithMany(u => u.Grades)
+                .HasForeignKey(l => l.GradeCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

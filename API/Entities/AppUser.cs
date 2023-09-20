@@ -26,5 +26,6 @@ namespace API.Entities
         public ICollection<AppUserRole> UserRoles { get; set; }
         public List<StudentClass> StudentClasses { get; set; }
         public List<Timetable> TimetableClasses { get; set; }
+        public List<Grade> Grades { get; set; }
     }
 }
