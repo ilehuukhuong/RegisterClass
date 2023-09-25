@@ -19,5 +19,7 @@ namespace API.Entities
         [Required]
         public double DiscountAmount { get; set; }
         public string Notes { get; set; }
+        [JsonIgnore]
+        public DateTime Created { get; set; } = DateTime.UtcNow;
     }
 }

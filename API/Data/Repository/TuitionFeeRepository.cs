@@ -44,6 +44,15 @@ namespace API.Data.Repository
             return await PagedList<StudentTuitionFeeDto>.CreateAsync(query.AsNoTracking().ProjectTo<StudentTuitionFeeDto>(_mapper.ConfigurationProvider), searchParams.PageNumber, searchParams.PageSize);
         }
 
+        public async Task<List<StudentTuitionFeeDto>> GetTuitionFeesByDay(SearchParams searchParams)
+        {
+            var query = _context.TuitionFees.AsQueryable();
+
+            if (searchParams.DateTime != null) query = query.Where(u => u.Created.Day == searchParams.DateTime.Value.Day && u.Created.Month == searchParams.DateTime.Value.Month && u.Created.Year == searchParams.DateTime.Value.Year);
+
+            return await _mapper.ProjectTo<StudentTuitionFeeDto>(query).ToListAsync();
+        }
+
         public void UpdateTuitionFee(TuitionFee tuitionFee)
         {
             _context.TuitionFees.Update(tuitionFee);

@@ -11,5 +11,6 @@ namespace API.Interfaces
         void UpdateTuitionFee(TuitionFee tuitionFee);
         Task<TuitionFee> GetTuitionFeeById(int id);
         Task<PagedList<StudentTuitionFeeDto>> GetTuitionFees(SearchParams searchParams);
+        Task<List<StudentTuitionFeeDto>> GetTuitionFeesByDay(SearchParams searchParams);
     }
 }
