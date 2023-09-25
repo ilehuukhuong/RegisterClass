@@ -19,7 +19,7 @@ namespace API.Controllers
         {
             if (searchParams.ClassId == null || searchParams.CourseId == null) return BadRequest("Please input class and course");
             if (await _uow.ClassRepository.GetClassById(searchParams.ClassId.Value) == null || await _uow.CourseRepository.GetCourseById(searchParams.CourseId.Value) == null) return NotFound();
-            
+
             var grade = await _uow.GradeRepository.GetGrades(searchParams);
 
             Response.AddPaginationHeader(new PaginationHeader(grade.CurrentPage, grade.PageSize, grade.TotalCount, grade.TotalPages));

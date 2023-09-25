@@ -42,7 +42,7 @@ namespace API.Data.Repository
             return await _context.Semesters.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public SemesterDto CopySemester (Semester semester)
+        public SemesterDto CopySemester(Semester semester)
         {
             var copy = new SemesterDto();
             copy.Code = semester.Code + "Copy";

@@ -76,7 +76,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("update-student/{studentId}")]
-        public async Task<ActionResult<StudentDto>> UpdateStudent(int studentId, [FromForm]RegisterDto registerDto)
+        public async Task<ActionResult<StudentDto>> UpdateStudent(int studentId, [FromForm] RegisterDto registerDto)
         {
             var user = await _uow.UserRepository.GetUserByIdAsync(studentId);
             if (user == null) return NotFound();
@@ -108,7 +108,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("create-student")]
-        public async Task<ActionResult<StudentDto>> CreateStudent([FromForm]RegisterDto registerDto)
+        public async Task<ActionResult<StudentDto>> CreateStudent([FromForm] RegisterDto registerDto)
         {
             if (await EmailExists(registerDto.Email)) return BadRequest("Email already in use");
 
@@ -174,7 +174,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("create-teacher/{username}")]
-        public async Task<ActionResult<TeacherDto>> CreateTeacher(string username,[FromForm]UpdateTeacherDto updateTeacherDto)
+        public async Task<ActionResult<TeacherDto>> CreateTeacher(string username, [FromForm] UpdateTeacherDto updateTeacherDto)
         {
             if (await UserExists(username)) return BadRequest("Username already in use");
 

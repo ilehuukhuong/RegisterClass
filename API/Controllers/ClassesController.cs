@@ -5,7 +5,6 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -33,7 +32,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult> CreateClass([FromForm]CreateClassDto createDto)
+        public async Task<ActionResult> CreateClass([FromForm] CreateClassDto createDto)
         {
             if (await _uow.ClassRepository.GetClassByCode(createDto.Code) != null) return BadRequest("This code has taken");
             var Class = _mapper.Map<Class>(createDto);
@@ -57,7 +56,7 @@ namespace API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult> UpdateClass([FromForm]UpdateClassDto updateClassDto, int id)
+        public async Task<ActionResult> UpdateClass([FromForm] UpdateClassDto updateClassDto, int id)
         {
             if (await _uow.ClassRepository.GetClassById(id) == null) return NotFound();
 

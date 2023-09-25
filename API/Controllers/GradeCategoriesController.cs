@@ -18,7 +18,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("get-coursegradecategories")]
-        public async Task<ActionResult<PagedList<CourseGradeCategoryDto>>> GetCourseGradeCategories([FromQuery]SearchParams searchParams) 
+        public async Task<ActionResult<PagedList<CourseGradeCategoryDto>>> GetCourseGradeCategories([FromQuery] SearchParams searchParams)
         {
             var courseGradeCategories = await _uow.GradeCategoryRepository.GetCourseGradeCategories(searchParams);
 
@@ -35,9 +35,9 @@ namespace API.Controllers
             if (gradecategory == null) return NotFound();
             var course = await _uow.CourseRepository.GetCourseById(createCourseGradeCategory.CourseId);
             if (course == null) return NotFound();
-            
+
             _uow.GradeCategoryRepository.CreateCourseGradeCategory(createCourseGradeCategory);
-            if(await _uow.Complete()) return Ok("Create successfully");
+            if (await _uow.Complete()) return Ok("Create successfully");
             return BadRequest("Problem create new");
         }
 
@@ -46,7 +46,7 @@ namespace API.Controllers
         public async Task<ActionResult> UpdateCourseGradeCategory(CreateCourseGradeCategory createCourseGradeCategory)
         {
             if (await _uow.GradeCategoryRepository.GetGradeCategoryById(createCourseGradeCategory.GradeCategoryId) == null) return NotFound();
-            if (await _uow.CourseRepository.GetCourseById(createCourseGradeCategory.CourseId) == null) return NotFound();      
+            if (await _uow.CourseRepository.GetCourseById(createCourseGradeCategory.CourseId) == null) return NotFound();
 
             await _uow.GradeCategoryRepository.UpdateCourseGradeCategory(createCourseGradeCategory);
 

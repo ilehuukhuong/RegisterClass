@@ -1,6 +1,4 @@
-﻿using API.Entities;
-
-namespace API.Helpers
+﻿namespace API.Helpers
 {
     public class SearchParams : PaginationParams
     {

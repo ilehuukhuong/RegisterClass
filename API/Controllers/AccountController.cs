@@ -1,12 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using API.Data.Template;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Web;
-using API.Data.Template;
 
 namespace API.Controllers
 {
@@ -57,7 +57,7 @@ namespace API.Controllers
 
                 await _uow.Complete();
             }
-           
+
             return new UserDto
             {
                 Username = user.UserName,

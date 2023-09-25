@@ -16,7 +16,7 @@ namespace API.Entities
         [JsonIgnore]
         public AppUser AppUser { get; set; }
         public int AppUserId { get; set; }
-        public DateTime Start {  get; set; }
+        public DateTime Start { get; set; }
         public DateTime End { get; set; }
     }
 }

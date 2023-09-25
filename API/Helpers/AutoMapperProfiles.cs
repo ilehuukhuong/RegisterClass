@@ -8,10 +8,10 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Grade,StudentGradeDto>()
+            CreateMap<Grade, StudentGradeDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AppUser.LastName + " " + src.AppUser.FirstName))
                 .ForMember(dest => dest.GradeCategory, opt => opt.MapFrom(src => src.GradeCategory.Name)); ;
-            CreateMap<HolidaySchedule,HolidaySchedule>();
+            CreateMap<HolidaySchedule, HolidaySchedule>();
             CreateMap<Timetable, TeacherTimetableDto>()
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
                 .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class.Name));
@@ -23,12 +23,12 @@ namespace API.Helpers
             CreateMap<Timetable, TimetableDto>()
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
                 .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.AppUser.FullName))
-                .ForMember(dest => dest.TeacherCode, opt => opt.MapFrom(src => src.AppUser.UserName))      
+                .ForMember(dest => dest.TeacherCode, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class.Name));
             CreateMap<UpdateTeacherDto, AppUser>();
             CreateMap<CreateTeacherDto, AppUser>();
             CreateMap<CreateCourseGradeCategory, CourseGradeCategory>();
-            CreateMap<CourseGradeCategory,CourseGradeCategoryDto>()
+            CreateMap<CourseGradeCategory, CourseGradeCategoryDto>()
                 .ForMember(dest => dest.Semester, opt => opt.MapFrom(src => src.Course.Semester.Name))
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))
                 .ForMember(dest => dest.GradeCategory, opt => opt.MapFrom(src => src.GradeCategory.Name));

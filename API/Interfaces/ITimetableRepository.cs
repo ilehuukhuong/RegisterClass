@@ -13,6 +13,6 @@ namespace API.Interfaces
         Task<PagedList<TimetableDto>> GetTimetables(SearchParams searchParams);
         Task<IEnumerable<StudentTimetableDto>> GetStudentTimetable(int userId);
         Task<IEnumerable<TeacherTimetableDto>> GetTeacherTimetable(int userId);
-        
+
     }
 }

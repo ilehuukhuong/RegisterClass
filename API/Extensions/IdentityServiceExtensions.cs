@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using API.Data;
+using API.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using API.Data;
-using API.Entities;
 using System.Text;
 
 namespace API.Extensions
@@ -51,7 +51,7 @@ namespace API.Extensions
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-                opt.AddPolicy("RequireTeacherRole", policy => policy.RequireRole("Teacher" , "Admin"));
+                opt.AddPolicy("RequireTeacherRole", policy => policy.RequireRole("Teacher", "Admin"));
                 opt.AddPolicy("RequireStudentRole", policy => policy.RequireRole("Student"));
             });
 

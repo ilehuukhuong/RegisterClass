@@ -48,7 +48,7 @@ namespace API.Data.Repository
 
             if (searchParams.Search != null) query = query.Where(u => u.Name.Contains(searchParams.Search) || u.Code.Contains(searchParams.Search));
 
-            if (searchParams.SemesterId != null) query = query.Where(u => u.SemesterId ==  searchParams.SemesterId);
+            if (searchParams.SemesterId != null) query = query.Where(u => u.SemesterId == searchParams.SemesterId);
 
             if (searchParams.DepartmentFacultyId != null) query = query.Where(u => u.DepartmentFacultyId == searchParams.DepartmentFacultyId);
 

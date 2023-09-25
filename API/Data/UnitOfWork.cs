@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using API.Data.Repository;
+﻿using API.Data.Repository;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Data
 {
