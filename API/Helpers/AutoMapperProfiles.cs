@@ -8,9 +8,14 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<TuitionFee, StudentTuitionFeeDto>()
+                .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.Class.TimetableClasses.First().AppUser.FullName))
+                .ForMember(dest => dest.StudentName, opt => opt.MapFrom(src => src.AppUser.FullName))
+                .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class.Name))
+                .ForMember(dest => dest.StudentCode, opt => opt.MapFrom(src => src.AppUser.UserName));
             CreateMap<Grade, StudentGradeDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AppUser.LastName + " " + src.AppUser.FirstName))
-                .ForMember(dest => dest.GradeCategory, opt => opt.MapFrom(src => src.GradeCategory.Name)); ;
+                .ForMember(dest => dest.GradeCategory, opt => opt.MapFrom(src => src.GradeCategory.Name));
             CreateMap<HolidaySchedule, HolidaySchedule>();
             CreateMap<Timetable, TeacherTimetableDto>()
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course.Name))

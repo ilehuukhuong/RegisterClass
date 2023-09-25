@@ -22,6 +22,7 @@ namespace API.Data
         public DbSet<Timetable> Timetables { get; set; }
         public DbSet<HolidaySchedule> HolidaySchedules { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<TuitionFee> TuitionFees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

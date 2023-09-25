@@ -12,6 +12,7 @@
         ITimetableRepository TimetableRepository { get; }
         IHolidayScheduleRepository HolidayScheduleRepository { get; }
         IGradeRepository GradeRepository { get; }
+        ITuitionFeeRepository TuitionFeeRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

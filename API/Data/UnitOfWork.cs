@@ -23,6 +23,7 @@ namespace API.Data
         public ITimetableRepository TimetableRepository => new TimetableRepository(_context, _mapper);
         public IHolidayScheduleRepository HolidayScheduleRepository => new HolidayScheduleRepository(_context, _mapper);
         public IGradeRepository GradeRepository => new GradeRepository(_context, _mapper);
+        public ITuitionFeeRepository TuitionFeeRepository => new TuitionFeeRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {
